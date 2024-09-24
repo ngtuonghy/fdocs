@@ -1,0 +1,206 @@
+Page 1 of 1
+Ngân Hàng TMCP Công Thương Việt Nam
+Chi nhánh Branch: 10698 - CN TP HA NOI - HOI SO
+SAO KÊ CHI TIẾT GIAO DỊCH
+TRANSACTIONS STATEMENT
+Từ ngày 10/09/2024 Đến ngày 12/09/2024
+Kính gửi quý khách hàng Dear Customer : BAN VAN DONG CUU TRO TRUNG UONG
+Địa chỉ Address : 46 TRANG THI QUAN HOAN KIEM TP HA NOI VIET NAM
+Vietinbank xin trân trọng thông báo Sao kê giao dịch Tài khoản số: 111602391111 của quý khách hàng như sau:
+Loại tiền tệ Currency VND
+STT
+Ngày GD
+Mô tả giao dịch
+Tên đối ứng
+(Có) Credit
+No
+Date Time
+Transaction Comment
+Offset Name
+TRAN TIEN ANH – A/C
+300.000
+110/09/2024 12:01:29
+CT nhanh 247 den: TRAN TIEN ANH chuyen tien ung ho nguoi dan vung bao lu
+LE PHUONG QUYNH – A/C
+100.000
+210/09/2024 12:01:46
+CT nhanh 247 den: Phuong Quynh Le chuyen tien
+TRAN TRONG SON – A/C
+100.000
+310/09/2024 13:33:47
+TRAN TRONG SON Chuyen tien ung ho (CT1111)
+NGUYEN THU BINH – A/C
+100.000
+410/09/2024 13:34:31
+NGUYEN THU BINH chuyen tien ung ho (CT1111)
+VND-TGTT-NGUYEN THU BINH – A/C
+100.000
+510/09/2024 13:37:09
+Chuyen tien den tu NAPAS Noi dung: NGUYEN THU BINH chuyen ung ho FT24254607609791 (CT1111)
+ACC – A/C
+500.000
+610/09/2024 13:38:18
+Chuyen tien den tu NAPAS Noi dung: NGUYEN HONG SON chuyen tien den BAN VAN DONG CUU TRO TRUNG UONG - ct1111 (ct1111)
+NGUYEN THU BINH – A/C
+50.000
+710/09/2024 13:56:55
+NGUYEN THU BINH chuyen tien ung ho (CT1111)
+UNG HO
+10.000
+810/09/2024 14:10:24
+TIEN MAT, VANG TIEN TE TAI DON VI – A/C
+BUI THI LINH chuyen tien (CT1111)
+BUI THI LINH – A/C
+200.000
+910/09/2024 14:48:37
+BUI QUOC HUNG – A/C
+200.000
+1010/09/2024 14:58:45
+CT nhanh 247 den: MBVCB.6993160493.196699.BUI QUOC HUNG chuyen tien.
+NGUYEN HOAI NAM – A/C
+50.000
+1110/09/2024 15:05:36
+CT nhanh 247 den: MBVCB.6993230328.242018.NGUYEN HOAI NAM ung ho ban cuu tro tw.
+DUONG THI NGOC LINH – A/C
+50.000
+1210/09/2024 15:12:46
+Chuyen tien den tu NAPAS Noi dung: Duong Thi Ngoc Linh chuyen tien
+NGUYEN DUC THANG – A/C
+3.000.000
+1310/09/2024 16:26:41
+CT nhanh 247 den: NGUYEN DUC THANG CHUYEN TIEN UNG HO BAO SO 3 (CT1111)
+PHAM THI THANH PHUONG – A/C
+2.000.000
+1410/09/2024 17:21:53
+PHAM THI THANH PHUONG chuyen tien ung ho (CT1111)
+LE THI HUONG – A/C
+1.000.000
+1510/09/2024 17:56:45
+CT nhanh 247 den: Vietinbank;ct1111;LE THI HUONG chuyen tien (ct1111)
+TRAN DINH KHUE – A/C
+500.000
+1610/09/2024 17:57:13
+UNG HO DONG BAO BI THIET HAI DO CON BAO SO 3 GAY RA (CT1111)
+PHAM THI HOAI THU – A/C
+2.000.000
+1710/09/2024 17:59:35
+Chuyen tien den tu NAPAS Noi dung: UNG HO DONG BAO BI THIET HAI DO CON BAO SO 3- 100924-17:59:35 634414 (CT1111)
+VND-TGTT-CHU DUC HOAN – A/C
+500.000
+1810/09/2024 18:02:04
+Chuyen tien den tu NAPAS Noi dung: chuyen tien ung ho dong bao lu lut FT24254021870119
+HOANG SY TIEN – A/C
+100.000
+1910/09/2024 18:03:48
+CT nhanh 247 den: MBVCB.6995532964.667557.Bs Tien ung ho dong bao bao lu.
+VU DANG THANH THAO chuyen tien
+VU DANG THANH THAO – A/C
+1.000.000
+2010/09/2024 18:07:56
+NGUYEN VAN TIEN – A/C
+300.000
+2110/09/2024 18:10:59
+CT nhanh 247 den: MBVCB.6995647944.731496.NGUYEN VAN TIEN chuyen tien.
+LAI NGOC LINH – A/C
+100.000
+2210/09/2024 18:11:51
+Tam long bguoi con VN ung ho ba con mien Bac than yeu (CT1111)
+NGUYEN THI HAI YEN ct ung ho dong bao lu lut
+NGUYEN THI HAI YEN – A/C
+500.000
+2310/09/2024 18:14:26
+NGUYEN THI HOA – A/C
+500.000
+2410/09/2024 18:16:07
+Chuyen tien den tu NAPAS Noi dung: Nguyen Thi Hoa chuyen tien Nam Mo Quan The Am Bo Tat (CT1111)
+1.000.000
+2510/09/2024 18:16:10
+VND-TGTT-NGUYEN NGOC THANG – A/C
+Chuyen tien den tu NAPAS Noi dung: NGUYEN NGOC THANG chuyen FT24254608070954 (CT1111)
+VU DANG QUYNH NHU chuyen tien (CT1111)
+VU DANG QUYNH NHU – A/C
+200.000
+2610/09/2024 18:19:53
+VND-TGTT-NGUYEN HONG LIEN – A/C
+1.000.000
+2710/09/2024 18:21:04
+Chuyen tien den tu NAPAS Noi dung: Ung ho dong bao bi thiet hai bao lu - Nam mo A Di Da Phat FT24254991695658 (CT1111)
+NGUYEN TU TRINH – A/C
+2.000.000
+2810/09/2024 18:26:21
+CT nhanh 247 den: MBVCB.6995848199.858512.NGUYEN TU TRINH chuyen tien ung ho dong bao MB.
+DINH HOANG MINH – A/C
+1.000.000
+2910/09/2024 18:27:18
+CT nhanh 247 den: DINH HOANG MINH UNG HO DONG BAO (CT1111)
+VND-TGTT-LUU THANH NHAN – A/C
+100.000
+3010/09/2024 18:28:30
+Chuyen tien den tu NAPAS Noi dung: Luu Thanh Nhan ung ho dong bao bao Yagi FT24254758001320
+TRAN THI CAO MAN – A/C
+200.000
+3110/09/2024 18:33:34
+Ung ho khac phuc hau qua bao so 3 yagi (CT1111)
+LE PHUONG QUYNH – A/C
+200.000
+3210/09/2024 18:35:04
+CT nhanh 247 den: Vietinbank;111602391111;LE PHUONG QUYNH chuyen tien
+NGUYEN PHU TRONG – A/C
+50.000
+3310/09/2024 18:38:25
+CT nhanh 247 den: MBVCB.6996001033.960516.NGUYEN PHU TRONG ung ho dong bao mien bac vuot qua kho khan.
+TRAN THI KIM XUAN – A/C
+200.000
+3410/09/2024 18:39:24
+Chuyen tien den tu NAPAS Noi dung: Tran Thi Kim Xuan ung ho dong bao lu lut bao Yagi (CT1111)
+Ung ho dong bao lu lut
+NGUYEN PHONG THU – A/C
+200.000
+3510/09/2024 18:41:33
+VO CONG HUNG – A/C
+52.222
+3610/09/2024 18:41:34
+CT nhanh 247 den: MBVCB.6996042925.987530.Ung Ho Dong Bao Bao Lu so 3 yagi.
+VU DUC TOAN – A/C
+200.000
+3710/09/2024 18:41:39
+CT nhanh 247 den: VU DUC TOAN P105 NHA N03 NGACH 37 NGO 167 TAY SON CK UNG HO
+PHAN THANH BIEN – A/C
+500.000
+3810/09/2024 18:42:24
+CT nhanh 247 den: PHAN THANH BIEN CHUYEN TIEN (CT1111)
+HA MAI NGA – A/C
+500.000
+3910/09/2024 18:43:20
+CT nhanh 247 den: Ung ho dong bao bao lu chung suc giup do (CT1111)
+HOANG DIEU LINH chuyen tien (CT1111)
+HOANG DIEU LINH – A/C
+500.000
+4010/09/2024 18:47:37
+200.000
+4110/09/2024 18:47:56
+VND-TGTT-DOAN NGOC QUY DON – A/C
+Chuyen tien den tu NAPAS Noi dung: DOAN NGOC QUY DON chuyen ung ho bao lu FT24254003351868 (CT1111)
+PHAM DINH VU – A/C
+50.000
+4210/09/2024 18:48:12
+Chuyen tien den tu NAPAS Noi dung: PHAM DINH VU CHUYEN KHOAN uhmb (Ct1111)
+VND-TGTT-TRAN THI MAI – A/C
+1.000.000
+4310/09/2024 18:48:22
+Chuyen tien den tu NAPAS Noi dung: TRAN THI MAI , thon nam , van ninh , mong cai FT24254613000939 (CT1111)
+DOAN VAN TRUONG – A/C
+100.000
+4410/09/2024 18:50:37
+CT nhanh 247 den: CHAU KHANH VY 6T UNG HO DB LU LUT (CT1111)
+MBBANK IBFT – A/C
+300.000
+4510/09/2024 18:50:39
+Chuyen tien den tu NAPAS Noi dung: ung ho dong bao bi thien tai (ct1111)
+Ung ho dong bao bi bao lu Yagi
+NGUYEN THI THU HUYEN – A/C
+1.000.000
+4610/09/2024 18:52:07
+NGUYEN THAI CONG – A/C
+4710/09/2024 18:52:24
+NGUYEN THAI CONG chuyen tien cuu tro lu lut (CT1111)
