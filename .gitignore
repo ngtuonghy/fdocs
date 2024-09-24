@@ -4,4 +4,4 @@
 /tests/*
 *.tsbuildinfo
 *.pdf
-
+pnpm-lock.yaml

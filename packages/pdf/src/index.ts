@@ -1,1 +1,1 @@
-export * from "./pdftext-extract";
+export * from "./pdf";

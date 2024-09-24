@@ -1,10 +1,24 @@
 {
 	"name": "@fdocs/pdf",
-	"version": "1.0.13",
-	"description": "",
-	"keywords": [],
-	"author": "",
-	"license": "ISC",
+	"version": "1.0.0-beta.1",
+	"description": "A simple light to extract plain text from a pdf file.",
+	"author": "ngtuonghy",
+	"license": "MIT",
+	"keywords": [
+		"react-pdf",
+		"pdftotext",
+		"pdf",
+		"text",
+		"react",
+		"pdf2text",
+		"pdfjs",
+		"pdf-to-text",
+		"@fdocs"
+	],
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/ngtuonghy/fdocs"
+	},
 	"main": "./dist/index.cjs",
 	"module": "./dist/index.mjs",
 	"types": "./dist/index.d.cts",

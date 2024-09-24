@@ -1,11 +1,11 @@
-import * as fs from "fs";
 import { getDocument } from "pdfjs-dist/legacy/build/pdf.mjs";
 import { parseMarkedPage } from "./parse-marked-page";
 import { parseLinedPage } from "./parse-line-page";
 import { groupTextItems } from "./group-text-items";
 import { PdfTextExtract } from "./types";
 import { Cell } from "./cell";
-const pdfTextExtract = async (
+
+const pdf = async (
 	pdfPath: string,
 	options: PdfTextExtract = {
 		threshold: 5,
@@ -43,4 +43,4 @@ const pdfTextExtract = async (
 	};
 };
 
-export { pdfTextExtract };
+export { pdf };

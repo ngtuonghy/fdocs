@@ -9,9 +9,9 @@ type PdfTextExtract = {
     }[];
 };
 
-declare const pdfTextExtract: (pdfPath: string, options?: PdfTextExtract) => Promise<{
+declare const pdf: (pdfPath: string, options?: PdfTextExtract) => Promise<{
     getText: string[];
     getRaw: string[];
 }>;
 
-export { pdfTextExtract };
+export { pdf };

@@ -1,5 +1,5 @@
 import fs from "fs";
-import { pdfTextExtract } from "@fdocs/pdf";
+import { pdf } from "@fdocs/pdf";
 import { clearLine } from "readline";
 import { text } from "stream/consumers";
 
@@ -24,7 +24,7 @@ const vietinbankParser = async (
 		"offsetName",
 	];
 	const pages = config.pages || "all";
-	const content = await pdfTextExtract(file);
+	const content = await pdf(file);
 	const lines = content.getText;
 	const cleanedLines = lines.map((line) => {
 		return line

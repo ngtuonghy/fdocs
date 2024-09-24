@@ -219,7 +219,7 @@ function groupTextItems(textItems, options) {
   return groupedRows.join("\n");
 }
 
-const pdfTextExtract = async (pdfPath, options = {
+const pdf = async (pdfPath, options = {
   threshold: 5,
   lineHeight: 1.67
 }) => {
@@ -247,4 +247,4 @@ const pdfTextExtract = async (pdfPath, options = {
   };
 };
 
-exports.pdfTextExtract = pdfTextExtract;
+exports.pdf = pdf;
