@@ -1,16 +1,14 @@
 {
 	"extends": "../../tsconfig.base.json",
 	"compilerOptions": {
-		"target": "es2017",
+		"target": "es2017"
 		// "outDir": "dist",
 		// "rootDir": "./src",
-		"composite": true
 	},
 	"include": ["src/**/*"],
 	"exclude": [
 		"src/setupTests.ts",
 		"src/**/*.{test,spec}.{ts,tsx}",
-		"src/**/__tests__/*",
-		"tests"
+		"src/**/__tests__/*"
 	]
 }
