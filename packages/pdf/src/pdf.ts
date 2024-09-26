@@ -35,11 +35,9 @@ const pdf = async (
 	}
 	console.log("done");
 
-	// fs.writeFileSync("foo.json", JSON.stringify(raw, null, 2));
-	// fs.writeFileSync("foo.csv", text.join("\n"));
 	return {
-		getText: text,
 		getRaw: raw,
+		getText: text,
 	};
 };
 
