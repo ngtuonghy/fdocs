@@ -1,13 +1,33 @@
-# `@fdocs/pdf`- simple light to extract plain text from a pdf file.
+<p align="center"> 
+    <h1 align="center">@fdocs/pdf 
+    <br>
+    simple light to extract plain text from a pdf file
+</h1>
+</p>
+
+
+<p align="center"> 
+  <a aria-label="NPM Downloads" href="https://www.npmjs.com/@fdocs/pdf">
+        <img alt="NPM Downloads" src="https://img.shields.io/npm/d18m/%40fdocs%2Fpdf?style=for-the-badge&labelColor=4F75FF">
+      
+  </a>
+  <a aria-label="NPM version" href="https://www.npmjs.com/@fdocs/pdf">
+        <img alt="NPM Version" src="https://img.shields.io/npm/v/%40fdocs%2Fpdf?style=for-the-badge&labelColor=4F75FF">
+  </a>
+  <a aria-label="License" href="https://github.com/ngtuonghy/fdocs/blob/main/LICENSE">
+    <img alt="NPM License" src="https://img.shields.io/npm/l/%40fdocs%2Fpdf?style=for-the-badge&labelColor=4F75FF">
+  </a>
+</p>
+
 ## Features
 
 - 🔥 Easy-to-use
-- 🔐 Password Protection: Securely handle password-protected documents.
+- 🔐 Password Protection:handle password-protected documents.
 - 📄 Flexible Page Selection: Process specific pages or the entire document.
 - 🚫 Line Skipping: Easily skip unwanted lines from pages.
 
 ## Install 
-```bash
+```console
 npm install @fdocs/pdf
 ```
 ## Usage 
@@ -98,7 +118,7 @@ extractTextFromPDF("foo.pdf")
 
 
 ## Authors
-- ngtuonghy
+- Nguyễn Tường Hy ([@ngtuonghy](https://github.com/ngtuonghy))
 
 ## License
 
