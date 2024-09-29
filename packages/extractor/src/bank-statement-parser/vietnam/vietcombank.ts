@@ -1,66 +1,87 @@
 import fs from "fs";
-import { tabulaConvert } from "../../../core";
-import { toObject } from "../../../utils/to-object";
+import { pdf } from "@fdocs/pdf";
+import { generateCSV } from "../../utils/generate-CSV";
 
 type VietinbankParserOptions = {
 	pages?: string | "all";
 	outputFile?: string;
 	format?: "CSV" | "JSON";
 	headers?: string[];
+	password?: string;
 };
 const vietcombankParser = async (
 	file: string,
 	config: VietinbankParserOptions = {
 		pages: "all",
-		format: "CSV",
+		format: "JSON",
 	},
 ) => {
 	const headers = config.headers || [
-		"no",
 		"dateTime",
-		"transactionComment",
+		"no",
 		"credit",
-		"offsetName",
+		"transactionComment",
 	];
-	const pages = config.pages || "all";
-	const content = await tabulaConvert(file, {
+
+	const pages = config.pages || "1";
+	const content = await pdf(file, {
 		pages: pages,
-		useLineReturns: true,
+		password: config.password,
+		skipLines: {
+			allPages: {
+				lines: "1-11",
+				lastLines: 7,
+			},
+			pages: [
+				{
+					page: 1,
+					lines: "1-28",
+				},
+			],
+		},
 	});
-
-	const lines = content.split("\n");
-	const cleanedLines = lines.map((line) => {
-		return line
-			.replace(/,+/g, ",")
-			.replace(/"+/g, "")
-			.replace(/^"+,/g, "")
-			.replace(/^,/, "")
-			.replace(/\r(?!$)/g, " ");
+	const transactions = [];
+	const lines = content.getText().join("\n").trim().split("\n");
+	const regex = /^(\d{2}\/\d{2}\/\d{4}) (.+)/;
+	let currentTransaction = null;
+	lines.forEach((line) => {
+		const match = line.match(regex);
+		if (match) {
+			if (currentTransaction) {
+				transactions.push(currentTransaction);
+			}
+			currentTransaction = {
+				[headers[0]]: match[1],
+				[headers[1]]: match[2],
+				[headers[2]]: "",
+				[headers[3]]: "",
+			};
+		} else if (currentTransaction) {
+			if (!currentTransaction[headers[2]]) {
+				currentTransaction[headers[2]] = line;
+			} else {
+				currentTransaction[headers[3]] += line;
+			}
+		}
 	});
+	if (currentTransaction) {
+		transactions.push(currentTransaction);
+	}
 
-	// .filter((line) => {
-	// 	return line.trim() !== "" && !/^,\s*$/.test(line);
-	// });
-	// console.log(cleanedLines);
-	console.log(lines[1].split("\r"));
-	fs.writeFileSync("vietcombank145.csv", lines[1]);
-	// let rs = cleanedLines.slice(0);
-	// if (pages === "all" || pages.includes("1")) {
-	// 	rs = cleanedLines.slice(2);
-	// }
-	// const obj = toObject(headers, rs, 0);
-	//
-	// if (config.outputFile) {
-	// 	const fileContent =
-	// 		config.format === "JSON" ? JSON.stringify(obj) : rs.join("\n");
-	// 	fs.writeFileSync(config.outputFile, fileContent);
-	// 	return `File has been written to ${config.outputFile}`;
-	// } else {
-	// 	if (config.format === "JSON") {
-	// 		return obj;
-	// 	} else {
-	// 		return rs.join("\n");
-	// 	}
-	// }
+	if (config.format === "CSV") {
+		const csv = generateCSV(transactions, headers);
+		if (config.outputFile) {
+			fs.writeFileSync(config.outputFile, csv);
+		}
+		return csv;
+	} else {
+		if (config.outputFile) {
+			fs.writeFileSync(
+				config.outputFile,
+				JSON.stringify(transactions, null, 2),
+			);
+		}
+		return transactions;
+	}
 };
 export { vietcombankParser };

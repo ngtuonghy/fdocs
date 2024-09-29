@@ -1,11 +1,12 @@
+import { writeFileSync } from "fs";
 import { Cell } from "./cell";
-import { PdfTextExtract } from "./types";
+import { PdfConfig } from "./types";
 ////                                                          ////
 //                                                              //
 // authour: "https://github.com/dictadata/pdf-data-parser";     //
 //                                                             //
 ////                                                          ////
-export const parseMarkedPage = async (page: any, options: PdfTextExtract) => {
+export const parseMarkedPage = async (page: any, options: PdfConfig) => {
 	let cell = null;
 	let markedContent = ""; // assume NO nesting of markedContent tags, at least I haven't seen it yet.
 	let artifact = false;
@@ -18,7 +19,7 @@ export const parseMarkedPage = async (page: any, options: PdfTextExtract) => {
 		disableCombineTextItems: false,
 	});
 
-	for (let item of content.items) {
+	content.items.forEach((item, index) => {
 		if (item.type === "beginMarkedContent") {
 			switch (item.tag) {
 				case "Artifact":
@@ -71,10 +72,10 @@ export const parseMarkedPage = async (page: any, options: PdfTextExtract) => {
 			if (paragraph || span) {
 				// ignore EOL
 				if (item.str === "" && item.width === 0 && paragraph && item.hasEOL)
-					continue;
+					return;
 				// ignore spacing between cells
 				if (item.str === " " && (paragraph || item.width > cell?.fontWidth))
-					continue;
+					return;
 				// for span and less than one character width assume we need it
 
 				// check to save and start a new cell
@@ -88,12 +89,17 @@ export const parseMarkedPage = async (page: any, options: PdfTextExtract) => {
 			}
 
 			if (!cell) cell = new Cell(options);
-
 			// append text to cell
-			cell.addItem(item);
+			cell.addItem(item, index);
 			paragraph = false;
 			span = false;
 		}
-	}
+		// push last cell
+	});
+	if (cell) cells.push(cell);
+	// cells.sort((a, b) => b.y2 - a.y2);
+	if (options.sortY1) cells.sort((a, b) => b.y1 - a.y1);
+	else cells.sort((a, b) => b.y2 - a.y2);
+	// writeFileSync("output.json", JSON.stringify(cells, null, 2));
 	return cells;
 };

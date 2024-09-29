@@ -1,14 +1,32 @@
 {
 	"name": "@fdocs/extractor",
-	"private": true,
-	"version": "1.0.0",
+	"version": "1.0.0-beta.3",
 	"description": "",
-	"main": "index.js",
-	"scripts": {},
-	"keywords": [],
-	"author": "",
-	"license": "ISC",
-	"devDependencies": {
+	"keywords": ["@fdocs", "pdf", "extractor"],
+	"author": "ngtuonghy <ngtuonghy@outlook.com>",
+	"license": "MIT",
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/ngtuonghy/fdocs"
+	},
+	"main": "./dist/index.cjs",
+	"module": "./dist/index.mjs",
+	"types": "./dist/index.d.cts",
+	"exports": {
+		"require": {
+			"types": "./dist/index.d.cts",
+			"default": "./dist/index.cjs"
+		},
+		"import": {
+			"types": "./dist/index.d.mts",
+			"default": "./dist/index.mjs"
+		}
+	},
+	"files": ["dist", "src"],
+	"scripts": {
+		"build": "tsc --noEmit && pkgroll"
+	},
+	"dependencies": {
 		"@fdocs/pdf": "workspace:*"
 	}
 }

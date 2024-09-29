@@ -1,4 +1,0 @@
-# .npmignore
-tsconfig.json
-/tests/
-*.tsbuildinfo

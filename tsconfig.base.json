@@ -1,7 +1,4 @@
-{
-   "publishConfig": {
-    "access": "public"
-  },
+{ 
 	"compilerOptions": {
 		// Treat files as modules even if it doesn't use import/export
 		"moduleDetection": "force",
