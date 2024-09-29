@@ -114,8 +114,7 @@ const extractTextFromPDF = async (file) => {
 }
 extractTextFromPDF("foo.pdf")
 ```
-## Changelog
-
+## [Changelog](https://github.com/ngtuonghy/fdocs/blob/main/packages/pdf/CHANGELOG.md)
 
 ## Authors
 - Nguyễn Tường Hy ([@ngtuonghy](https://github.com/ngtuonghy))
