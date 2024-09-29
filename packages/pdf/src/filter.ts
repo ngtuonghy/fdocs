@@ -45,46 +45,69 @@ function getSkipLines(options: PdfConfig, currentPage: number): number[] {
 			}
 		}
 	}
-	// console.log(skipLines);
 	return skipLines;
+}
+
+function checkTextMatch(
+	text: string,
+	matchText: string,
+	matchType: string,
+): boolean {
+	switch (matchType) {
+		case "exact":
+			return text === matchText;
+		case "contain":
+			return text.includes(matchText);
+		case "startWith":
+			return text.startsWith(matchText);
+		case "regex":
+			try {
+				const regex = new RegExp(matchText);
+				return regex.test(text);
+			} catch (e) {
+				console.error(`Invalid regex pattern: ${matchText}`, e);
+				return false;
+			}
+		default:
+			return false;
+	}
 }
 
 function shouldDeleteItem(
 	item: Cell,
-	textFilters?: { text: string; type?: string }[],
+	textFilters?: {
+		text: string;
+		type?: string;
+		nextLine?: {
+			text: string;
+			type: "contain" | "startWith" | "regex" | "exact";
+		};
+	}[],
+	nextItem?: Cell,
 ): boolean {
 	if (!textFilters) return false;
 
-	return textFilters.some(({ text, type = "contain" }) => {
-		switch (type) {
-			case "contain":
-				return item.text.includes(text);
-			case "startWith":
-				return item.text.startsWith(text);
-			case "exact":
-				return item.text === text;
-			case "regex":
-				try {
-					const regex = new RegExp(text);
-					return regex.test(item.text);
-				} catch (e) {
-					console.error(`Invalid regex pattern: ${text}`, e);
-					return false;
-				}
-			default:
-				return false;
-		}
+	return textFilters.some(({ text, type = "contain", nextLine }): boolean => {
+		const match = checkTextMatch(item.text, text, type);
+		return (
+			match &&
+			(!nextLine ||
+				(nextItem &&
+					checkTextMatch(nextItem.text, nextLine.text, nextLine.type)))
+		);
 	});
 }
 export function filter(items: Cell[], options: PdfConfig, currentPage: number) {
 	const skipLines = getSkipLines(options, currentPage);
-	const cells = items
-		.filter((_, index) => {
-			const currentLine = index + 1;
-			return !skipLines.includes(currentLine);
-		})
-		.filter((item) => !shouldDeleteItem(item, options.skipLinesByText));
-	// console.log(cells.length);
+	const cells = items.filter((item, index) => {
+		const currentLine = index + 1;
+		if (skipLines.includes(currentLine)) {
+			return false;
+		}
+		const nextItem = index + 1 < items.length ? items[index + 1] : undefined;
+		return !shouldDeleteItem(item, options.skipLinesByText, nextItem);
+	});
+
 	const page = options.skipLines?.pages.find(
 		(page) => page.page === currentPage,
 	);

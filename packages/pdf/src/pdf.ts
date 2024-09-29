@@ -13,12 +13,22 @@ const pdf = async (
 		threshold: 5,
 		lineHeight: 1.67,
 		pages: "1",
+		sortY1: false,
 	},
 ): Promise<{
 	getText: () => string[];
 	getRaw: () => string[];
 	getPages: () => number;
 }> => {
+	const finalOptions: PdfConfig = Object.assign(
+		{
+			threshold: 5,
+			lineHeight: 1.67,
+			pages: "1",
+			sort: false,
+		},
+		options,
+	);
 	const raw = [];
 	const text = [];
 	const data = new Uint8Array(readFileSync(pdfPath));
@@ -27,12 +37,11 @@ const pdf = async (
 			data: data,
 			standardFontDataUrl: "../node_modules/pdfjs-dist/standard_fonts/",
 			verbosity: 0,
-			password: options.password,
+			password: finalOptions.password,
 		}).promise;
-
 		const markInfo = await doc.getMarkInfo();
 		const numPages = doc.numPages;
-		const pagesToProcess = parsePagesOption(options.pages, numPages);
+		const pagesToProcess = parsePagesOption(finalOptions.pages, numPages);
 		// console.log(markInfo?.Marked);
 		console.log("Extracting...");
 
@@ -41,9 +50,9 @@ const pdf = async (
 			const page = await doc.getPage(i);
 			let temp: Cell[] = [];
 			if (markInfo?.Marked) {
-				temp = await parseMarkedPage(page, options);
+				temp = await parseMarkedPage(page, finalOptions);
 			} else {
-				temp = await parseLinedPage(page, options);
+				temp = await parseLinedPage(page, finalOptions);
 			}
 			raw.push(
 				...temp.map((cell) => ({
@@ -56,7 +65,7 @@ const pdf = async (
 					fontWidth: cell.fontWidth,
 				})),
 			);
-			text.push(filter(temp, options, i));
+			text.push(filter(temp, finalOptions, i));
 		}
 		console.log("done");
 		return {

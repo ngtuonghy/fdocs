@@ -15,9 +15,14 @@ export type PdfConfig = {
 	newlines?: boolean;
 	artifacts?: boolean;
 	password?: string;
+	sortY1?: boolean;
 	skipLinesByText?: {
 		text: string;
 		type?: "contain" | "startWith" | "regex" | "exact";
+		nextLine?: {
+			text: string;
+			type: "contain" | "startWith" | "regex" | "exact";
+		};
 	}[];
 	pages?: string | number[] | "all";
 	skipLines?: {
