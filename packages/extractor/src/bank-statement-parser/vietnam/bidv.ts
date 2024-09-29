@@ -22,9 +22,10 @@ const bidvParser = async (
 		"transactionComment",
 	];
 
-	const pages = config.pages || "all";
+	const pages = config.pages || "1-30";
 	const content = await pdf(file, {
 		pages: pages,
+		sortY1: true,
 		skipLines: {
 			pages: [
 				{
@@ -41,12 +42,16 @@ const bidvParser = async (
 			{
 				text: "351",
 				type: "exact",
+				nextLine: {
+					text: "Chứng từ này được in/chuyển đổi trực tiếp từ hệ thống In sao kê tài khoản khách",
+					type: "contain",
+				},
 			},
 		],
 	});
 	const transactions = [];
 	const lines = content.getText().join("\n").trim().split("\n");
-	fs.writeFileSync("bidv-raw.txt", JSON.stringify(content.getRaw(), null, 2));
+
 	let currentTransaction = null;
 	lines.forEach((line) => {
 		if (currentTransaction) {
@@ -65,8 +70,6 @@ const bidvParser = async (
 			} else if (!currentTransaction[headers[3]]) {
 				currentTransaction[headers[3]] = line;
 			}
-
-			console.log(currentTransaction[headers[3]]);
 		} else {
 			currentTransaction = {
 				[headers[0]]: line,
@@ -77,6 +80,9 @@ const bidvParser = async (
 		}
 	});
 
+	if (currentTransaction) {
+		transactions.push(currentTransaction);
+	}
 	if (config.format === "CSV") {
 		const csv = generateCSV(transactions, headers);
 		if (config.outputFile) {
