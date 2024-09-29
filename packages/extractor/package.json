@@ -1,6 +1,6 @@
 {
 	"name": "@fdocs/extractor",
-	"version": "1.0.0-beta.3",
+	"version": "1.0.0",
 	"description": "",
 	"keywords": ["@fdocs", "pdf", "extractor"],
 	"author": "ngtuonghy <ngtuonghy@outlook.com>",
