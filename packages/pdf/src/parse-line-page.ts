@@ -1,16 +1,15 @@
 import { PDFPageProxy, TextItem } from "pdfjs-dist/types/src/display/api";
 import { Cell } from "./cell";
-import { PdfTextExtract } from "./types";
-
+import { PdfConfig } from "./types";
+import { writeFileSync } from "fs";
 ////                                                          ////
 //                                                              //
 //   authour: "https://github.com/dictadata/pdf-data-parser";   //
 //                                                              //
 ////                                                          ////
-
 export const parseLinedPage = async (
 	page: PDFPageProxy,
-	options: PdfTextExtract,
+	options: PdfConfig,
 ) => {
 	let cell = new Cell(options);
 	let wasEOL = false;
@@ -19,7 +18,7 @@ export const parseLinedPage = async (
 		disableNormalization: false,
 	});
 
-	content.items.forEach((item: TextItem) => {
+	content.items.forEach((item: TextItem, index) => {
 		if (item.dir !== "ltr")
 			// expect direction left-to-right
 			console.warn(item.dir);
@@ -47,11 +46,16 @@ export const parseLinedPage = async (
 
 		// characters have a height, ignore more than one space between cells
 		if (item.height > 0 || (item.str === " " && item.width < cell?.fontWidth))
-			cell.addItem(item);
+			cell.addItem(item, index);
 
 		wasEOL = item.hasEOL;
 	});
 
 	if (cell.count > 0) cells.push(cell);
+	// cells.sort((a, b) => a.id - b.id);
+	// cells.sort((a, b) => a.x1 - b.x1);
+	cells.sort((a, b) => b.y1 - a.y1);
+	// console.log("line-page");
+	// writeFileSync("output.json", JSON.stringify(cells, null, 2));
 	return cells;
 };

@@ -1,10 +1,9 @@
 import fs from "fs";
 import { pdf } from "@fdocs/pdf";
-import { clearLine } from "readline";
-import { text } from "stream/consumers";
+import { generateCSV } from "../../utils/generate-CSV";
 
 type VietinbankParserOptions = {
-	pages?: string | "all";
+	pages?: string | "all" | number[];
 	outputFile?: string;
 	format?: "CSV" | "JSON";
 	headers?: string[];
@@ -12,8 +11,8 @@ type VietinbankParserOptions = {
 const vietinbankParser = async (
 	file: string,
 	config: VietinbankParserOptions = {
-		pages: "2",
-		format: "CSV",
+		pages: "all",
+		format: "JSON",
 	},
 ) => {
 	const headers = config.headers || [
@@ -23,51 +22,68 @@ const vietinbankParser = async (
 		"credit",
 		"offsetName",
 	];
+
 	const pages = config.pages || "all";
-	const content = await pdf(file);
-	const lines = content.getText;
-	const cleanedLines = lines.map((line) => {
-		return line
-			.replace(/,+/g, ",")
-			.replace(/"+/g, "")
-			.replace(/^"+,/g, "")
-			.replace(/^,/, "")
-			.replace(/\r(?!$)/g, " ");
+	const content = await pdf(file, {
+		pages: pages,
+		skipLines: {
+			pages: [
+				{
+					page: 1,
+					lines: "1-28",
+				},
+			],
+		},
 	});
-	fs.writeFileSync("foo.txt", content.getText.join("\n"));
-	console.log(cleanedLines);
+	const transactions = [];
+	const lines = content.getText().join("\n").trim().split("\n");
+	const regex = /^(\d+)(\d{2}\/\d{2}\/.+)$/;
+	let currentTransaction = null;
+	lines.forEach((line) => {
+		const match = line.match(regex);
 
-	//
-	// const lines = content.split("\n");
-	// const cleanedLines = lines
-	// 	.map((line) => {
-	// 		return line
-	// 			.replace(/,+/g, ",")
-	// 			.replace(/"+/g, "")
-	// 			.replace(/^"+,/g, "")
-	// 			.replace(/^,/, "")
-	// 			.replace(/\r(?!$)/g, " ");
-	// 	})
-	// 	.filter((line) => {
-	// 		return line.trim() !== "" && !/^,\s*$/.test(line);
-	// 	});
-	//
-	// let rs = cleanedLines.slice(0);
-	// if (pages === "all" || pages.includes("1")) {
-	// 	rs = cleanedLines.slice(2);
-	// }
+		if (match) {
+			if (currentTransaction) {
+				transactions.push(currentTransaction);
+			}
 
-	// if (config.outputFile) {
-	// 	const fileContent =
-	// 		config.format === "JSON" ? JSON.stringify(obj) : rs.join("\n");
-	// 	fs.writeFileSync(config.outputFile, fileContent);
-	// 	return `File has been written to ${config.outputFile}`;
-	// } else {
-	// 	if (config.format === "JSON") {
-	// 		return obj;
-	// 	} else {
-	// 		return rs.join("\n");
-	// 	}
-	// }
+			currentTransaction = {
+				[headers[0]]: match[1], // "no"
+				[headers[1]]: match[2], // "dateTime"
+				[headers[2]]: "", // "transactionComment"
+				[headers[3]]: "", // "credit"
+				[headers[4]]: "", // "offsetName"
+			};
+		} else if (currentTransaction) {
+			if (!currentTransaction[headers[2]]) {
+				currentTransaction[headers[2]] = line;
+			} else if (!currentTransaction[headers[3]] && /^\d/.test(line)) {
+				currentTransaction[headers[3]] = line;
+			} else {
+				currentTransaction[headers[4]] = line;
+			}
+		}
+	});
+
+	if (currentTransaction) {
+		transactions.push(currentTransaction);
+	}
+
+	if (config.format === "CSV") {
+		const csv = generateCSV(transactions, headers);
+		if (config.outputFile) {
+			fs.writeFileSync(config.outputFile, csv);
+		}
+		return csv;
+	} else {
+		if (config.outputFile) {
+			fs.writeFileSync(
+				config.outputFile,
+				JSON.stringify(transactions, null, 2),
+			);
+		}
+		return transactions;
+	}
 };
+
 export { vietinbankParser };

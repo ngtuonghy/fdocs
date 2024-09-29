@@ -25,6 +25,7 @@ export class Cell {
 	prevY2: number;
 	hasSpan: boolean;
 	inserted: boolean;
+	id: number;
 
 	constructor(options: { lineHeight?: number; newlines?: boolean } = {}) {
 		this.options = options;
@@ -43,20 +44,25 @@ export class Cell {
 		this.prevY2 = 0;
 		this.hasSpan = false;
 		this.inserted = false;
+		this.id = 0;
 	}
 
 	get lineHeight(): number {
 		return this.fontHeight * this.lineHeightRatio;
 	}
 
-	addItem(item: {
-		str: string;
-		hasEOL: boolean;
-		transform: number[];
-		width: number;
-		height: number;
-	}): void {
+	addItem(
+		item: {
+			str: string;
+			hasEOL: boolean;
+			transform: number[];
+			width: number;
+			height: number;
+		},
+		index: number,
+	): void {
 		this.count++;
+		this.id = index;
 
 		if (item.str) this.text += item.str;
 		if (item.hasEOL) this.text += this.options.newlines ? "\n" : " ";
