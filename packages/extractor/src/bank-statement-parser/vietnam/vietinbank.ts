@@ -4,6 +4,7 @@ import { generateCSV } from "../../utils/generate-CSV";
 
 type VietinbankParserOptions = {
 	pages?: string | "all" | number[];
+	password?: string;
 	outputFile?: string;
 	format?: "CSV" | "JSON";
 	headers?: string[];
@@ -23,9 +24,10 @@ const vietinbankParser = async (
 		"offsetName",
 	];
 
-	const pages = config.pages || "all";
+	const pages = config.pages || "1";
 	const content = await pdf(file, {
 		pages: pages,
+		password: config.password,
 		skipLines: {
 			pages: [
 				{

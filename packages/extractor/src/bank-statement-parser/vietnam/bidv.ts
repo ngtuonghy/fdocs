@@ -7,6 +7,7 @@ type VietinbankParserOptions = {
 	outputFile?: string;
 	format?: "CSV" | "JSON";
 	headers?: string[];
+	password?: string;
 };
 const bidvParser = async (
 	file: string,
@@ -22,8 +23,9 @@ const bidvParser = async (
 		"transactionComment",
 	];
 
-	const pages = config.pages || "1-30";
+	const pages = config.pages || "1";
 	const content = await pdf(file, {
+		password: config.password,
 		pages: pages,
 		sortY1: true,
 		skipLines: {
