@@ -46,7 +46,7 @@ const extractTextFromPDF = async (file) => {
 
 	console.log(lines); // Output the extracted text
 };
-extractTextFromPDF("vietcombank14.pdf");
+extractTextFromPDF("foo.pdf");
 ```
 ## API
 
@@ -129,7 +129,8 @@ const extractTextFromPDF = async (file) => {
 
     console.log(lines); // Output the extracted text
 }
-extractTextFromPDF("foo.pdf"```
+extractTextFromPDF("foo.pdf")
+```
 ## [Changelog](https://github.com/ngtuonghy/fdocs/blob/main/packages/pdf/CHANGELOG.md)
 
 ## Authors
