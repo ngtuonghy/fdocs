@@ -35,8 +35,11 @@
 	"scripts": {
 		"build": "tsc --noEmit && pkgroll"
 	},
-	"files": ["dist", "src"],
+	"files": [
+		"dist",
+		"src"
+	],
 	"dependencies": {
-		"pdfjs-dist": "^4.6.82"
+		"pdfjs-dist": "^4.7.76"
 	}
 }
