@@ -1,6 +1,6 @@
 {
 	"name": "@fdocs/pdf",
-	"version": "1.1.1",
+	"version": "1.1.2",
 	"description": "A simple light to extract plain text from a pdf file.",
 	"author": "ngtuonghy <ngtuonghy@outlook.com",
 	"license": "MIT",
@@ -35,10 +35,7 @@
 	"scripts": {
 		"build": "tsc --noEmit && pkgroll"
 	},
-	"files": [
-		"dist",
-		"src"
-	],
+	"files": ["dist", "src"],
 	"dependencies": {
 		"pdfjs-dist": "^4.7.76"
 	}
