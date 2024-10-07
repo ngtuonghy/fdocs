@@ -7,3 +7,4 @@ dist/
 *.pdf
 tests/*
 !tests/test.ts
+*.txt

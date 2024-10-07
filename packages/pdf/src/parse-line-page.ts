@@ -54,8 +54,13 @@ export const parseLinedPage = async (
 	if (cell.count > 0) cells.push(cell);
 
 	// cells.sort((a, b) => a.x1 - b.x1);
-	if (options.sortY1) cells.sort((a, b) => b.y1 - a.y1);
-	else cells.sort((a, b) => b.y2 - a.y2);
+	if (options?.sort === "Y1") {
+		cells.sort((a, b) => b.y1 - a.y1);
+	} else if (options?.sort === "Y2") {
+		cells.sort((a, b) => b.y2 - a.y2);
+	}
+	// if (options.sortY1) cells.sort((a, b) => b.y1 - a.y1);
+	// else cells.sort((a, b) => b.y2 - a.y2);
 	// console.log("line-page");
 	// writeFileSync("output.json", JSON.stringify(cells, null, 2));
 	return cells;

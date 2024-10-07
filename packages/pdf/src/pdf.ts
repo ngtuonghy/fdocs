@@ -1,4 +1,4 @@
-import { getDocument } from "pdfjs-dist/legacy/build/pdf.mjs";
+import { getDocument, PDFWorker } from "pdfjs-dist/legacy/build/pdf.mjs";
 import { parseMarkedPage } from "./parse-marked-page";
 import { parseLinedPage } from "./parse-line-page";
 import { Cell } from "./cell";
@@ -6,6 +6,11 @@ import { readFileSync } from "fs";
 import { filter } from "./filter";
 import { parsePagesOption } from "./parse-pages-option";
 import { PdfConfig } from "./types";
+import {
+	PDFDocumentProxy,
+	PDFPageProxy,
+	TextItem,
+} from "pdfjs-dist/types/src/display/api";
 
 const pdf = async (
 	pdfPath: string,
@@ -13,24 +18,25 @@ const pdf = async (
 		threshold: 5,
 		lineHeight: 1.67,
 		pages: "1",
-		sortY1: false,
 	},
 ): Promise<{
 	getText: () => string[];
 	getRaw: () => string[];
 	getPages: () => number;
+	getTextContent: () => string[];
 }> => {
 	const finalOptions: PdfConfig = Object.assign(
 		{
 			threshold: 5,
 			lineHeight: 1.67,
 			pages: "1",
-			sort: false,
+			sort: "Y2",
 		},
 		options,
 	);
 	const raw = [];
 	const text = [];
+	const textContentArray = [];
 	const data = new Uint8Array(readFileSync(pdfPath));
 	try {
 		const doc = await getDocument({
@@ -48,6 +54,12 @@ const pdf = async (
 		for (const i of pagesToProcess) {
 			console.log("Page", i, "of", numPages);
 			const page = await doc.getPage(i);
+			const textContent = await page.getTextContent();
+			const pageTextContent = textContent.items
+				.map((item: TextItem) => item.str)
+				.join("\n");
+			textContentArray.push(pageTextContent);
+
 			let temp: Cell[] = [];
 			if (markInfo?.Marked) {
 				temp = await parseMarkedPage(page, finalOptions);
@@ -72,6 +84,7 @@ const pdf = async (
 			getRaw: () => raw,
 			getText: () => text,
 			getPages: () => numPages,
+			getTextContent: () => textContentArray,
 		};
 	} catch (e) {
 		console.error("Error reading pdf", e);

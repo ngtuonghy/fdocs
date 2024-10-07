@@ -4,17 +4,25 @@ import { pdf } from "../src";
 const extractTextFromPDF = async (file) => {
 	// Parse the PDF file
 	const content = await pdf(file, {
-		pages: "all" /*, password: "123124" */,
-		skipLines: {
-			allPages: {
-				lines: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
-				lastLines: 7,
-			},
-			pages: [
+		pages: "1-5",
+		/*, password: "123124" */
+		skip: {
+			ranges: [
 				{
-					page: 1,
-					lines: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
-					lastLines: 2,
+					start: {
+						value: "I love you",
+						match: "contain",
+					},
+					end: {
+						value: "I hate you",
+						match: "contain",
+					},
+				},
+			],
+			text: [
+				{
+					value: /^\(.*\)$/,
+					match: "regex",
 				},
 			],
 		},
@@ -24,7 +32,7 @@ const extractTextFromPDF = async (file) => {
 
 	// Get the extracted text lines
 	const lines = content.getText(); // ==> array: text
-	writeFileSync("vietcombank145.txt", lines.join("\n"));
+	writeFileSync("pdftest.txt", lines.join("\n"));
 	//  const lines = content.getRaw(); ==> object:  coordinates (x, y, etc.).
 	//  const lines = content.getPages(); ==> total number pages
 

@@ -25,16 +25,16 @@ function parseLineRange(line: string): number[] {
 function getSkipLines(options: PdfConfig, currentPage: number): number[] {
 	let skipLines: number[] = [];
 
-	if (options.skipLines?.allPages) {
-		if (typeof options.skipLines.allPages.lines === "string") {
-			skipLines = parseLineRange(options.skipLines.allPages.lines);
+	if (options.skip?.global) {
+		if (typeof options.skip.global.lines === "string") {
+			skipLines = parseLineRange(options.skip.global.lines);
 		} else {
-			skipLines = options.skipLines.allPages.lines as number[];
+			skipLines = options.skip.global.lines as number[];
 		}
 	}
 
-	if (options.skipLines?.pages) {
-		const page = options.skipLines.pages.find(
+	if (options.skip?.pageSpecific) {
+		const page = options.skip.pageSpecific?.find(
 			(page) => page.page === currentPage,
 		);
 		if (page) {
@@ -50,24 +50,19 @@ function getSkipLines(options: PdfConfig, currentPage: number): number[] {
 
 function checkTextMatch(
 	text: string,
-	matchText: string,
+	matchText: string | RegExp,
 	matchType: string,
 ): boolean {
 	switch (matchType) {
 		case "exact":
 			return text === matchText;
 		case "contain":
-			return text.includes(matchText);
+			return text.includes(matchText as string);
 		case "startWith":
-			return text.startsWith(matchText);
+			return text.startsWith(matchText as string);
 		case "regex":
-			try {
-				const regex = new RegExp(matchText);
-				return regex.test(text);
-			} catch (e) {
-				console.error(`Invalid regex pattern: ${matchText}`, e);
-				return false;
-			}
+			return new RegExp(matchText).test(text);
+		// return RegExp(matchText).test(text);
 		default:
 			return false;
 	}
@@ -76,47 +71,80 @@ function checkTextMatch(
 function shouldDeleteItem(
 	item: Cell,
 	textFilters?: {
-		text: string;
-		type?: string;
+		value: string | RegExp;
+		match?: string;
 		nextLine?: {
-			text: string;
-			type: "contain" | "startWith" | "regex" | "exact";
+			value: string | RegExp;
+			match: "contain" | "startWith" | "regex" | "exact";
 		};
 	}[],
 	nextItem?: Cell,
 ): boolean {
 	if (!textFilters) return false;
 
-	return textFilters.some(({ text, type = "contain", nextLine }): boolean => {
-		const match = checkTextMatch(item.text, text, type);
+	return textFilters.some(({ value, match = "contain", nextLine }): boolean => {
+		const matchF = checkTextMatch(item.text, value, match);
 		return (
-			match &&
+			matchF &&
 			(!nextLine ||
 				(nextItem &&
-					checkTextMatch(nextItem.text, nextLine.text, nextLine.type)))
+					checkTextMatch(nextItem.text, nextLine.match, nextLine.match)))
 		);
 	});
 }
 export function filter(items: Cell[], options: PdfConfig, currentPage: number) {
 	const skipLines = getSkipLines(options, currentPage);
+
 	const cells = items.filter((item, index) => {
 		const currentLine = index + 1;
-		if (skipLines.includes(currentLine)) {
+		if (skipLines?.includes(currentLine)) {
 			return false;
 		}
 		const nextItem = index + 1 < items.length ? items[index + 1] : undefined;
-		return !shouldDeleteItem(item, options.skipLinesByText, nextItem);
+		return !shouldDeleteItem(item, options.skip?.text, nextItem);
 	});
 
-	const page = options.skipLines?.pages.find(
+	const page = options.skip?.pageSpecific?.find(
 		(page) => page.page === currentPage,
 	);
 
 	if (page?.lastLines) {
 		cells.splice(-page.lastLines);
-	} else if (options?.skipLines?.allPages?.lastLines) {
-		cells.splice(-options.skipLines.allPages.lastLines);
+	} else if (options?.skip?.global?.lastLines) {
+		cells.splice(-options.skip.global.lastLines);
 	}
+	let isSkipping = false;
+	return cells
+		.map((item) => {
+			if (options?.skip?.ranges) {
+				for (const range of options.skip.ranges) {
+					const startMatch = checkTextMatch(
+						item.text,
+						range.start.value,
+						range.start.match || "contain",
+					);
 
-	return cells.map((item) => item.text).join("\n");
+					if (startMatch) {
+						isSkipping = true;
+					}
+
+					const endMatch = checkTextMatch(
+						item.text,
+						range.end.value,
+						range.end.match || "contain",
+					);
+
+					if (endMatch) {
+						isSkipping = false;
+						return null;
+					}
+				}
+			}
+
+			if (!isSkipping) {
+				return item.text.trim();
+			}
+		})
+		.filter(Boolean)
+		.join("\n");
 }
